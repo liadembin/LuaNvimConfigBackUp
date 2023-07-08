@@ -1,0 +1,15 @@
+type Person = { name: string; age: number; }
+
+let arr: Person[] = [
+	{ name: "A", age: 123 },
+	{ name: "B", age: 6 },
+	{ name: "D", age: 12 },
+]
+arr.forEach((value, index) => {
+	value.name
+})
+const k = "asd";
+for (let i = 0; i < k.length; i++) {
+	const element = k[i];
+}
+
