@@ -71,6 +71,7 @@ require('lazy').setup({
   "themaxmarchuk/tailwindcss-colors.nvim",
   'tpope/vim-rhubarb',
   { 'akinsho/toggleterm.nvim', version = "*", config = true },
+  'ThePrimeagen/vim-be-good',
   -- or
   { 'akinsho/toggleterm.nvim', version = "*", opts = { --[[ things you want to change go here]] } },
   -- Detect tabstop and shiftwidth automatically
@@ -135,7 +136,8 @@ require('lazy').setup({
     },
   },
   'norcalli/nvim-colorizer.lua',
-  { "ellisonleao/gruvbox.nvim",      priority = 1000 },
+  --[[ { "ellisonleao/gruvbox.nvim",      priority = 1000 } ]] --
+  { "EdenEast/nightfox.nvim" },
   {
     "folke/tokyonight.nvim",
     lazy = false,
@@ -161,7 +163,7 @@ require('lazy').setup({
     opts = {
       options = {
         icons_enabled = true,
-        theme = 'gruvbox',
+        theme = 'nightfox',
         component_separators = '|',
         section_separators = '',
       },
@@ -208,13 +210,14 @@ require('lazy').setup({
     },
     build = ':TSUpdate',
   },
+  'averms/black-nvim',
 
 
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
   --       These are some example plugins that I've included in the kickstart repository.
   --       Uncomment any of the lines below to enable them.
   require 'kickstart.plugins.autoformat',
-  --require 'kickstart.plugins.debug',
+  require 'kickstart.plugins.debug',
 
   -- NOTE: The import below automatically adds your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    You can use this folder to prevent any conflicts with this init.lua if you're interested in keeping
@@ -229,39 +232,38 @@ require('lazy').setup({
 -- NOTE: You can change these options as you wish!
 
 -- Set highlight on search
-vim.o.hlsearch = false
-vim.keymap.set('n', 'fm', 'Format')
+vim.o.hlsearch = true
+--vim.keymap.set('n', '<leader>mt', ':Format')
 -- Make line numbers default
 vim.wo.number = true
-
 -- Enable mouse mode
 vim.o.mouse = 'a'
 -- local tokyonight = require "tokyonight"
 -- tokyonight.setup(opts)
 -- tokyonight.load()
-require("gruvbox").setup({
-  --undercurl = true,
-  --underline = true,
-  bold = true,
-  -- italic = {
-  --   --strings = true,
-  --   --comments = true,
-  --   operators = false,
-  --   folds = true,
-  -- },
-  strikethrough = true,
-  invert_selection = false,
-  invert_signs = false,
-  invert_tabline = false,
-  invert_intend_guides = false,
-  inverse = true, -- invert background for search, diffs, statuslines and errors
-  contrast = "",  -- can be "hard", "soft" or empty string
-  palette_overrides = {},
-  overrides = {},
-  dim_inactive = true,
-  transparent_mode = true,
-})
--- Sync clipboard between OS and Neovim.
+-- require("gruvbox").setup({
+--   --undercurl = true,
+--   --underline = true,
+--   bold = true,
+--   -- italic = {
+--   --   --strings = true,
+--   --   --comments = true,
+--   --   operators = false,
+--   --   folds = true,
+--   -- },
+--   strikethrough = true,
+--   invert_selection = false,
+--   invert_signs = false,
+--   invert_tabline = false,
+--   invert_intend_guides = false,
+--   inverse = true, -- invert background for search, diffs, statuslines and errors
+--   contrast = "",  -- can be "hard", "soft" or empty string
+--   palette_overrides = {},
+--   overrides = {},
+--   dim_inactive = true,
+--   transparent_mode = true,
+-- })
+-- -- Sync clipboard between OS and Neovim.
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
 vim.o.clipboard = 'unnamedplus'
@@ -272,7 +274,8 @@ vim.o.breakindent = true
 -- Save undo history
 vim.o.undofile = true
 vim.o.background = "dark"
-vim.cmd [[colorscheme gruvbox]]
+vim.cmd [[colorscheme nightfox]]
+
 vim.cmd [[highlight Normal ctermbg=none]]
 vim.cmd [[highlight NonText ctermbg=none]]
 vim.cmd [[highlight Normal guibg=none]]
@@ -343,17 +346,35 @@ vim.keymap.set('n', '<leader>/', function()
 end, { desc = '[/] Fuzzily search in current buffer' })
 vim.wo.relativenumber = true
 vim.keymap.set('n', '<leader>ff', require('telescope.builtin').git_files, { desc = 'Search [G]it [F]iles' })
-vim.keymap.set('n', '<leader>sf', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
-vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
-vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
-vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
-vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
+vim.keymap.set('n', '<leader>fs', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
+vim.keymap.set('n', '<leader>fh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
+vim.keymap.set('n', '<leader>fw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
+vim.keymap.set('n', '<leader>fg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
+vim.keymap.set('n', '<leader>fd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
 
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+local null_ls = require("null-ls")
 require("null-ls").setup({
+  sources = {
+    null_ls.builtins.formatting.clang_format,
+    null_ls.builtins.formatting.eslint,
+    null_ls.builtins.formatting.lua_format,
+    null_ls.builtins.formatting.autopep8,
+    null_ls.builtins.formatting.prettier,
+    null_ls.builtins.code_actions.eslint,
+    null_ls.builtins.diagnostics.clang_check,
+    null_ls.builtins.diagnostics.ruff,
+    null_ls.builtins.formatting.csharpier,
+    null_ls.builtins.formatting.prismaFmt,
+    null_ls.builtins.code_actions.refactoring,
+    null_ls.builtins.diagnostics.sqlfluff.with({
+      extra_args = { "--dialect", "mysql" },   -- change to your dialect
+    }),
+  },
+
   -- you can reuse a shared lspconfig on_attach callback here
   on_attach = function(client, bufnr)
     if client.supports_method("textDocument/formatting") then
@@ -464,14 +485,14 @@ local on_attach = function(_, bufnr)
   nmap('ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
   nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
-  nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
-  nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
-  nmap('D', vim.lsp.buf.type_definition, 'Type [D]efinition')
-  nmap('ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
-  nmap('ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+  nmap('<leader>lr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
+  nmap('<leader>li', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
+  nmap('<leader>ld', vim.lsp.buf.type_definition, 'Type [D]efinition')
+  nmap('<leader>ld', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
+  nmap('<leader>ls', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
   -- See `:help K` for why this keymap
-  nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
+  nmap('<leader>h', vim.lsp.buf.hover, 'Hover Documentation')
   nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
   -- Lesser used LSP functionality
@@ -501,6 +522,7 @@ local servers = {
   tsserver = {},
   vimls = {},
   tailwindcss = {},
+  pylyzer = {},
   svelte = {},
   prismals = {},
   asm_lsp = {},
@@ -510,12 +532,21 @@ local servers = {
   cssls = {},
   emmet_ls = {},
   rome = {},
+  pylsp = {
+
+  },
+  jedi_language_server = {},
+  cmake = {},
+  -- pylama = {},
+  -- pydocstyle = {},
   lua_ls = {
     Lua = {
       workspace = { checkThirdParty = false },
       telemetry = { enable = false },
     },
   },
+
+  --black = {}
 }
 
 -- Setup neovim lua configuration
