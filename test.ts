@@ -4,6 +4,7 @@ let arr: Person[] = [
 	{ name: "A", age: 123 },
 	{ name: "B", age: 6 },
 	{ name: "D", age: 12 },
+	{name:"Change",age:12}
 ]
 arr.forEach((value, index) => {
 	value.name

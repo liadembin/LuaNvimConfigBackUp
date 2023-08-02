@@ -15,5 +15,4 @@ class Person:
 p = Person("asd")
 
 print(p.Speak())
-
 requests.get("  https://google.com/").text
