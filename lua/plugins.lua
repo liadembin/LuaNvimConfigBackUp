@@ -18,20 +18,21 @@ vim.opt.rtp:prepend(lazypath)
 --    as they will be available in your neovim runtime.
 require('lazy').setup({
   -- NOTE: First, some plugins that don't require any configuration
-
+  { 'codota/tabnine-nvim',     build = "pwsh.exe -file .\\dl_binaries.ps1" },
   -- Git related plugins
   'tpope/vim-fugitive',
   'weilbith/nvim-code-action-menu',
   "themaxmarchuk/tailwindcss-colors.nvim",
   'tpope/vim-rhubarb',
-  { 'akinsho/toggleterm.nvim', version = "*", config = true },
+  { 'akinsho/toggleterm.nvim', version = "*",                              config = true },
   'ThePrimeagen/vim-be-good',
+  'wintermute-cell/gitignore.nvim',
   -- or
   { 'akinsho/toggleterm.nvim', version = "*", opts = { --[[ things you want to change go here]] } },
   -- Detect tabstop and shiftwidth automatically
 
   'tpope/vim-sleuth',
-  { "nvim-tree/nvim-tree.lua", lazy = false, dependencies = { "nvim-tree/nvim-web-devicons", } },
+  { "nvim-tree/nvim-tree.lua", lazy = false,  dependencies = { "nvim-tree/nvim-web-devicons", } },
   -- NOTE: This is where your plugins related to LSP can be installed.
   --  The configuration is done below. Search for lspconfig to find it below.
   {
@@ -70,7 +71,7 @@ require('lazy').setup({
   },
   "windwp/nvim-ts-autotag",
   -- Useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim',    opts = {} },
+  { 'folke/which-key.nvim',  opts = {} },
   {
     -- Adds git releated signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',

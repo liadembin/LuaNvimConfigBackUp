@@ -95,3 +95,14 @@ vim.keymap.set('n', '<leader>pf', function() vim.lsp.buf.format() end, { desc = 
 --vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 --vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 vim.keymap.set('n', '<C-/>', 'gc')
+--Folding Using Tree Sitter - https://www.jmaguire.tech/posts/treesitter_folding/
+vim.opt.foldenable = false
+vim.opt.foldmethod = "syntax"
+local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
+vim.api.nvim_create_autocmd('TextYankPost', {
+  callback = function()
+    vim.highlight.on_yank()
+  end,
+  group = highlight_group,
+  pattern = '*',
+})
