@@ -18,13 +18,13 @@ vim.opt.rtp:prepend(lazypath)
 --    as they will be available in your neovim runtime.
 require('lazy').setup({
   -- NOTE: First, some plugins that don't require any configuration
-  { 'codota/tabnine-nvim',     build = "pwsh.exe -file .\\dl_binaries.ps1" },
+  -- { 'codota/tabnine-nvim',     build = "pwsh.exe -file .\\dl_binaries.ps1" },
   -- Git related plugins
   'tpope/vim-fugitive',
   'weilbith/nvim-code-action-menu',
   "themaxmarchuk/tailwindcss-colors.nvim",
   'tpope/vim-rhubarb',
-  { 'akinsho/toggleterm.nvim', version = "*",                              config = true },
+  --{ 'akinsho/toggleterm.nvim', version = "*",                              config = true },
   'ThePrimeagen/vim-be-good',
   'wintermute-cell/gitignore.nvim',
   -- or
@@ -182,21 +182,22 @@ require('lazy').setup({
   -- amongst your other plugins
   { 'akinsho/toggleterm.nvim', version = "*", config = true },
   -- or
-  {
-    'romgrk/barbar.nvim',
-    dependencies = {
-      'lewis6991/gitsigns.nvim',     -- OPTIONAL: for git status
-      'nvim-tree/nvim-web-devicons', -- OPTIONAL: for file icons
-    },
-    init = function() vim.g.barbar_auto_setup = false end,
-    opts = {
-      -- lazy.nvim will automatically call setup for you. put your options here, anything missing will use the default:
-      -- animation = true,
-      -- insert_at_start = true,
-      -- …etc.
-    },
-    version = '^1.0.0'
-  },
+  -- {
+  --   'romgrk/barbar.nvim',
+  --   dependencies = {
+  --     'lewis6991/gitsigns.nvim',     -- OPTIONAL: for git status
+  --     'nvim-tree/nvim-web-devicons', -- OPTIONAL: for file icons
+  --   },
+  --   init = function() vim.g.barbar_auto_setup = false end,
+  --   opts = {
+  --     -- lazy.nvim will automatically call setup for you. put your options here, anything missing will use the default:
+  --     -- animation = true,
+  --     -- insert_at_start = true,
+  --     -- …etc.
+  --   },
+  --   version = '^1.0.0'
+  -- },
+
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
   --       These are some example plugins that I've included in the kickstart repository.
   --       Uncomment any of the lines below to enable them.

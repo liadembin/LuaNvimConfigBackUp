@@ -1,7 +1,5 @@
-vim.keymap.set("n", "<leader>bv", require("buffer_manager.ui").toggle_quick_menu, { desc = "[B]uffer Menu" })
-vim.keymap.set("n", "<leader>bn", require("buffer_manager.ui").nav_next, { desc = "[B]uffer [N]ext" })
-vim.keymap.set("n", "<leader>bb", require("buffer_manager.ui").nav_prev, { desc = "[B]uffer [B]ack" })
-vim.keymap.set("n", "<leader>bm", function() require 'buffer_manager.ui'.save_menu_to_file('bm') end,
+vim.keymap.set("n", "<leader>mb", require("buffer_manager.ui").nav_prev, { desc = "[B]uffer [B]ack" })
+vim.keymap.set("n", "<leader>mm", function() require 'buffer_manager.ui'.save_menu_to_file('bm') end,
   { desc = "[B]uffer Save" })
 vim.keymap.set("n", "<leader>bf", function() require 'buffer_manager.ui'.load_menu_from_file('bm') end,
   { desc = "[B]uffer [F]rom [F]ile" })
@@ -9,8 +7,8 @@ vim.keymap.set("n", "<leader>bf", function() require 'buffer_manager.ui'.load_me
 local map = vim.api.nvim_set_keymap
 local opts = { noremap = true, silent = true }
 -- Move to previous/next
-map('n', '<leader>o[', '<Cmd>BufferPrevious<CR>', {desc = "Previous Buffer" })
-map('n', '<leader>o]', '<Cmd>BufferNext<CR>', {desc="Next Buffer"})
+map('n', '<leader>o[', '<Cmd>BufferPrevious<CR>', { desc = "Previous Buffer" })
+map('n', '<leader>o]', '<Cmd>BufferNext<CR>', { desc = "Next Buffer" })
 
 -- Re-order to previous/next
 -- map('n', '<leader>om[', '<Cmd>BufferMovePrevious<CR>', opts)
@@ -27,7 +25,7 @@ map('n', '<leader>8', '<Cmd>BufferGoto 8<CR>', opts)
 map('n', '<leader>9', '<Cmd>BufferGoto 9<CR>', opts)
 map('n', '<leader>0', '<Cmd>BufferLast<CR>', opts)
 -- Pin/unpin buffer
-map('n', '<leader>op', '<Cmd>BufferPin<CR>', {desc="Pin Buffer"})
+map('n', '<leader>op', '<Cmd>BufferPin<CR>', { desc = "Pin Buffer" })
 -- Close buffer
 map('n', '<leader>oc', '<Cmd>BufferClose<CR>', { desc = "Close Buffer" })
 -- Wipeout buffer
