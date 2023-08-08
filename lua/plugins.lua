@@ -27,7 +27,7 @@ require('lazy').setup({
   --{ 'akinsho/toggleterm.nvim', version = "*",                              config = true },
   'ThePrimeagen/vim-be-good',
   'wintermute-cell/gitignore.nvim',
-  -- or
+  "williamboman/mason-lspconfig.nvim", -- or
   { 'akinsho/toggleterm.nvim', version = "*", opts = { --[[ things you want to change go here]] } },
   -- Detect tabstop and shiftwidth automatically
 

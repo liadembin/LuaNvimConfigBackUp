@@ -12,11 +12,12 @@ local on_attach = function(_, bufnr)
 
     vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
   end
+  require("tailwindcss-colors").buf_attach(bufnr)
+  -- print("rn")
+  nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
+  nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
-  nmap('rn', vim.lsp.buf.rename, '[R]e[n]ame')
-  nmap('ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
-
-  nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
+  nmap('<leader>gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
   nmap('<leader>lr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
   nmap('<leader>li', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
   nmap('<leader>ld', vim.lsp.buf.type_definition, 'Type [D]efinition')
@@ -28,7 +29,7 @@ local on_attach = function(_, bufnr)
   nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
   -- Lesser used LSP functionality
-  nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+  nmap('<leader>gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
   nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
   nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
   nmap('<leader>wl', function()
@@ -83,52 +84,51 @@ local servers = {
 
 -- Setup neovim lua configuration
 -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
-vim.api.nvim_create_autocmd('LspAttach', {
-  desc = 'LSP actions',
-  callback = function(event)
-    -- Create your keybindings here...
-  end
-})
-
--- require("mason").setup()
--- require("mason-lspconfig").setup()
-
+-- vim.api.nvim_create_autocmd('LspAttach', {
+--   desc = 'LSP actions',
+--   callback = function(event)
+--     -- Create your keybindings here...
+--   end
+-- })
+--
+require("mason").setup()
+-- require("mason-lspconfig").setup(
+--   {
+--     ensure_installed = servers
+--   }
+-- )
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 --
 
-require('mason').setup()
+--require('mason').setup()
 -- capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 --
 -- -- Ensure the servers above are installed
-local mason_lspconfig = require 'mason-lspconfig'
-
-
-mason_lspconfig.setup {
+require('mason-lspconfig').setup {
   ensure_installed = vim.tbl_keys(servers),
 }
-mason_lspconfig.setup_handlers {
-  function(server_name)
-    require("lspconfig")[server_name].setup {
-      capabilities = capabilities,
-      on_attach = on_attach,
-      settings = servers[server_name],
-    }
-  end,
-}
-local nvim_lsp = require("lspconfig")
+local lsp_config = require("lspconfig")
+-- local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
+-- local mason_lspconfig = require 'mason-lspconfig'
 
-on_attach = function(client, bufnr)
-  -- other stuff --
-  --
-  -- require("tailwindcss-colors").buf_attach(bufnr)
+
+local get_servers = require('mason-lspconfig').get_installed_servers
+
+for _, server_name in ipairs(get_servers()) do
+  lsp_config[server_name].setup({
+    capabilities = capabilities,
+    on_attach = on_attach
+  })
 end
-
-nvim_lsp["tailwindcss"].setup({
-  -- other settings --
-  settings     = servers["tailwindcss"],
-  capabilities = capabilities,
-  on_attach    = on_attach
-})
-require("tailwindcss-colors").buf_attach(bufnr)
--- this is stupid because it attaches the tailwindcss to all buffers
+-- local nvim_lsp = require("lspconfig")
+-- nvim_lsp["tailwindcss"].setup({
+--   -- other settings --
+--   settings     = servers["tailwindcss"],
+--   capabilities = lsp_capabilities,
+--   on_attach    = on_attach
+-- })
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
+vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
 -- but im Lazy and dont know enought nvim yet
