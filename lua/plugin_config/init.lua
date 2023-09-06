@@ -11,3 +11,7 @@ require("/plugin_config/null_ls")
 require("/plugin_config/nvim_tree")
 require("/plugin_config/telescope")
 require("/plugin_config/tree_sitter")
+-- require("/plugin_config/indent_blank_line")
+require("/plugin_config/nvim-ts-rainbow")
+
+require("/plugin_config/llama")

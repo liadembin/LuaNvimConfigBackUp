@@ -24,6 +24,7 @@ require('lazy').setup({
   'weilbith/nvim-code-action-menu',
   "themaxmarchuk/tailwindcss-colors.nvim",
   'tpope/vim-rhubarb',
+
   --{ 'akinsho/toggleterm.nvim', version = "*",                              config = true },
   'ThePrimeagen/vim-be-good',
   'wintermute-cell/gitignore.nvim',
@@ -131,12 +132,8 @@ require('lazy').setup({
   --   'lukas-reineke/indent-blankline.nvim',
   --   -- Enable `lukas-reineke/indent-blankline.nvim`
   --   -- See `:help indent_blankline.txt`
-  --   opts = {
-  --     char = '┊',
-  --     show_trailing_blankline_indent = false,
-  --   },
   -- },
-
+  "HiPhish/nvim-ts-rainbow2",
   -- "gc" to comment visual regions/lines
   'Mofiqul/dracula.nvim',
   { "navarasu/onedark.nvim" },
@@ -210,5 +207,14 @@ require('lazy').setup({
   --    up-to-date with whatever is in the kickstart repo.
   --
   --    For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
+  "tpope/vim-dadbod",
+  "kristijanhusak/vim-dadbod-ui",
+  "kristijanhusak/vim-dadbod-completion",
+  {
+    'huggingface/llm.nvim',
+    opts = {
+      -- cf Setup
+    }
+  },
   { import = 'custom.plugins' },
 }, {})
