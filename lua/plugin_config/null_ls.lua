@@ -9,7 +9,7 @@ null_ls.setup({
     null_ls.builtins.formatting.prettier,
     null_ls.builtins.code_actions.eslint,
     null_ls.builtins.diagnostics.clang_check,
-    null_ls.builtins.diagnostics.ruff,
+    -- null_ls.builtins.diagnostics.ruff,
     null_ls.builtins.formatting.csharpier,
     null_ls.builtins.formatting.prismaFmt,
     null_ls.builtins.code_actions.refactoring,
@@ -20,8 +20,8 @@ null_ls.setup({
     null_ls.builtins.code_actions.eslint_d,
 
     null_ls.builtins.code_actions.gomodifytags,
-    null_ls.builtins.code_actions.impl, null_ls.builtins.completion.vsnip
-  ,
+    null_ls.builtins.code_actions.impl
+    ,
   },
 
   -- you can reuse a shared lspconfig on_attach callback here
@@ -34,7 +34,7 @@ null_ls.setup({
         callback = function()
           -- on 0.8, you should use vim.lsp.buf.format({ bufnr = bufnr }) instead
           -- on later neovim version, you should use vim.lsp.buf.format({ async = false }) instead
-          vim.lsp.buf.formatting_sync()
+          vim.lsp.buf.format({ async = false })
         end,
       })
     end

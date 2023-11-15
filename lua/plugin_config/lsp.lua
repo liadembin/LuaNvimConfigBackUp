@@ -12,13 +12,13 @@ local on_attach = function(_, bufnr)
 
     vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
   end
-  require("tailwindcss-colors").buf_attach(bufnr)
+  -- require("tailwindcss-colors").buf_attach(bufnr)
   -- print("rn")
-  nmap('rn', vim.lsp.buf.rename, '[R]e[n]ame')
-  nmap('ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+  nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
+  nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
-  nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
-  nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
+  nmap('<leader>gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
+  nmap('<leader>gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
   nmap('<leader>li', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
   nmap('<leader>ld', vim.lsp.buf.type_definition, 'Type [D]efinition')
   nmap('<leader>ld', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
@@ -82,28 +82,8 @@ local servers = {
   --black = {}
 }
 
--- Setup neovim lua configuration
--- nvim-cmp supports additional completion capabilities, so broadcast that to servers
--- vim.api.nvim_create_autocmd('LspAttach', {
---   desc = 'LSP actions',
---   callback = function(event)
---     -- Create your keybindings here...
---   end
--- })
---
 require("mason").setup()
--- require("mason-lspconfig").setup(
---   {
---     ensure_installed = servers
---   }
--- )
-local capabilities = vim.lsp.protocol.make_client_capabilities()
---
 
---require('mason').setup()
--- capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
---
--- -- Ensure the servers above are installed
 require('mason-lspconfig').setup {
   ensure_installed = vim.tbl_keys(servers),
 }
@@ -111,24 +91,69 @@ local lsp_config = require("lspconfig")
 -- local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
 -- local mason_lspconfig = require 'mason-lspconfig'
 
-
+local capabilities = vim.lsp.protocol.make_client_capabilities()
 local get_servers = require('mason-lspconfig').get_installed_servers
-
 for _, server_name in ipairs(get_servers()) do
   lsp_config[server_name].setup({
     capabilities = capabilities,
     on_attach = on_attach
   })
 end
--- local nvim_lsp = require("lspconfig")
--- nvim_lsp["tailwindcss"].setup({
---   -- other settings --
---   settings     = servers["tailwindcss"],
---   capabilities = lsp_capabilities,
---   on_attach    = on_attach
--- })
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
+
+
+
+require('lspkind').init({
+  -- DEPRECATED (use mode instead): enables text annotations
+  --
+  -- default: true
+  -- with_text = true,
+
+  -- defines how annotations are shown
+  -- default: symbol
+  -- options: 'text', 'text_symbol', 'symbol_text', 'symbol'
+  mode = 'text_symbol',
+  -- default symbol map
+  -- can be either 'default' (requires nerd-fonts font) or
+  -- 'codicons' for codicon preset (requires vscode-codicons font)
+  --
+  -- default: 'default'
+  preset = 'codicons',
+
+  -- override preset symbols
+  --
+  -- default: {}
+  symbol_map = {
+    Text = "󰉿 text",
+    Method = "󰆧 method",
+    Function = "󰊕 function",
+    Constructor = " contructor",
+    Field = "󰜢 field",
+    Variable = "󰀫 variable",
+    Class = "󰠱 class",
+    Interface = "  interface",
+    Module = "  module",
+    Property = "󰜢  Property",
+    Unit = "󰑭  Unit",
+    Value = "󰎠  Value",
+    Enum = "  Enum",
+    Keyword = "󰌋  Keyword",
+    Snippet = "  Snippet",
+    Color = "󰏘  Color",
+    File = "󰈙  File",
+    Reference = "󰈇  Reference",
+    Folder = "󰉋  Folder",
+    EnumMember = " EnumMember",
+    Constant = "󰏿  Constant",
+    Struct = "󰙅  Struct",
+    Event = " Event",
+    Operator = "󰆕  Operator",
+    TypeParameter = "Type Paramater",
+  },
+})
+
+
+vim.keymap.set('n', 'pd', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
+vim.keymap.set('n', 'nd', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
 -- but im Lazy and dont know enought nvim yet

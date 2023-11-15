@@ -1,9 +1,6 @@
 using System;
+enum Turns { White = 0, Black = 1 }
 class Project
 {
-    public static void Main(string[] args)
-    {
-        object value = System.Console.Writeine(args);
-    }
-
+    public static void Main(string[] args, string[] argv) { string s = "123"; }
 }

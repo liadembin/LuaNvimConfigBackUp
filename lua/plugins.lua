@@ -21,19 +21,19 @@ require('lazy').setup({
   -- { 'codota/tabnine-nvim',     build = "pwsh.exe -file .\\dl_binaries.ps1" },
   -- Git related plugins
   'tpope/vim-fugitive',
-  'weilbith/nvim-code-action-menu',
+  -- 'weilbith/nvim-code-action-menu',
   "themaxmarchuk/tailwindcss-colors.nvim",
   'tpope/vim-rhubarb',
-
+  { 'onsails/lspkind.nvim' },
   --{ 'akinsho/toggleterm.nvim', version = "*",                              config = true },
   'ThePrimeagen/vim-be-good',
   'wintermute-cell/gitignore.nvim',
   "williamboman/mason-lspconfig.nvim", -- or
-  { 'akinsho/toggleterm.nvim', version = "*", opts = { --[[ things you want to change go here]] } },
+  -- { 'akinsho/toggleterm.nvim', version = "*", opts = { --[[ things you want to change go here]] } },
   -- Detect tabstop and shiftwidth automatically
 
   'tpope/vim-sleuth',
-  { "nvim-tree/nvim-tree.lua", lazy = false,  dependencies = { "nvim-tree/nvim-web-devicons", } },
+  { "nvim-tree/nvim-tree.lua", lazy = false, dependencies = { "nvim-tree/nvim-web-devicons", } },
   -- NOTE: This is where your plugins related to LSP can be installed.
   --  The configuration is done below. Search for lspconfig to find it below.
   {
@@ -46,8 +46,7 @@ require('lazy').setup({
 
       -- Useful status updates for LSP
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim',       opts = { tag = "legacy", branch = "legacy" }, branch = "legacy", tag = "legacy" },
-
+      { 'j-hui/fidget.nvim' } --[[ ,       opts = { tag = "legacy", branch = "legacy" }, branch = "legacy", tag = "legacy" } ]],
       -- Additional lua configuration, makes nvim stuff amazing!
       --
       'folke/neodev.nvim',
@@ -149,7 +148,7 @@ require('lazy').setup({
     'nvim-telescope/telescope-fzf-native.nvim',
     -- NOTE: If you are having trouble with this installation,
     --       refer to the README for telescope-fzf-native for more instructions.
-    build =
+    uild =
     'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build',
     cond = function()
       return vim.fn.executable 'make' == 1
@@ -165,19 +164,30 @@ require('lazy').setup({
     },
     build = ':TSUpdate',
   },
-  'averms/black-nvim',
-  "theprimeagen/refactoring.nvim",
+  {
+    "jay-babu/mason-null-ls.nvim",
+    event = { "BufReadPre", "BufNewFile" },
+    dependencies = {
+      "williamboman/mason.nvim",
+      "jose-elias-alvarez/null-ls.nvim",
+    },
+    config = function()
+      require("plugin_config.null_ls") -- require your null-ls config here (example below)
+    end,
+  },
+  -- 'averms/black-nvim',
+  -- "theprimeagen/refactoring.nvim",
   {
     'ThePrimeagen/harpoon',
     dependencies = { 'nvim-lua/plenary.nvim' }
   },
-  {
-    'j-morano/buffer_manager.nvim',
-    dependencies = { 'nvim-lua/plenary.nvim' }
-  },
+  -- {
+  --   'j-morano/buffer_manager.nvim',
+  --   dependencies = { 'nvim-lua/plenary.nvim' }
+  -- },
 
   -- amongst your other plugins
-  { 'akinsho/toggleterm.nvim', version = "*", config = true },
+  -- { 'akinsho/toggleterm.nvim', version = "*", config = true },
   -- or
   -- {
   --   'romgrk/barbar.nvim',
@@ -210,11 +220,11 @@ require('lazy').setup({
   "tpope/vim-dadbod",
   "kristijanhusak/vim-dadbod-ui",
   "kristijanhusak/vim-dadbod-completion",
-  {
-    'huggingface/llm.nvim',
-    opts = {
-      -- cf Setup
-    }
-  },
+  -- {
+  --   'huggingface/llm.nvim',
+  --   opts = {
+  --     -- cf Setup
+  --   }
+  -- },
   { import = 'custom.plugins' },
 }, {})

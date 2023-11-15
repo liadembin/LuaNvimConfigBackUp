@@ -19,31 +19,31 @@ require('nvim-treesitter.configs').setup {
   textobjects = {
     move = {
       enable = true,
-      set_jumps = true, -- whether to set jumps in the jumplist
+      set_jumps = true, -- whether to set jumps in the goto_next_start = {
       goto_next_start = {
-        [']m'] = '@function.outer',
+        [']f'] = '@function.outer',
         [']]'] = '@class.outer',
       },
       goto_next_end = {
-        [']M'] = '@function.outer',
+        [']u'] = '@function.outer',
         [']['] = '@class.outer',
       },
       goto_previous_start = {
-        ['[m'] = '@function.outer',
-        ['[['] = '@class.outer',
+        ['[f'] = '@function.outer',
+        ['[c'] = '@class.outer',
       },
       goto_previous_end = {
-        ['[M'] = '@function.outer',
+        ['[u'] = '@function.outer',
         ['[]'] = '@class.outer',
       },
     },
     swap = {
       enable = true,
       swap_previous = {
-        ['<leader>A'] = '@parameter.inner',
+        ['<leader>ps'] = '@parameter.inner',
       },
       swap_next = {
-        ['<leader>a'] = '@parameter.inner',
+        ['<leader>pp'] = '@parameter.inner',
       },
     },
     autotag = {
@@ -54,12 +54,17 @@ require('nvim-treesitter.configs').setup {
       lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
       keymaps = {
         -- You can use the capture groups defined in textobjects.scm
-        ['aa'] = '@parameter.outer',
-        ['ia'] = '@parameter.inner',
+        ['ap'] = '@parameter.outer',
+        ['ip'] = '@parameter.inner',
         ['af'] = '@function.outer',
         ['if'] = '@function.inner',
         ['ac'] = '@class.outer',
         ['ic'] = '@class.inner',
+        ['io'] = '@conditional.inner',
+        ['ao'] = '@conditional.outer',
+        ['in'] = '@loop.inner',
+        ['al'] = '@loop.outer',
+        ['a/'] = '@comment.outer',
       },
     }
   },
