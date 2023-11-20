@@ -6,7 +6,7 @@ const arr: Person[] = [
 	{ name: "D", age: 12 },
 	{ name: "Change", age: 12 },
 ];
-arr.forEach(function(value, index) {
+(function(value, index) {
 	value.name;
 });
 const k = "asd";

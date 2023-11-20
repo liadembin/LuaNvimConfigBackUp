@@ -4,7 +4,7 @@ null_ls.setup({
   sources = {
     null_ls.builtins.formatting.clang_format,
     null_ls.builtins.formatting.eslint,
-    null_ls.builtins.formatting.lua_format,
+    -- null_ls.builtins.formatting.lua_format,
     null_ls.builtins.formatting.autopep8,
     null_ls.builtins.formatting.prettier,
     null_ls.builtins.code_actions.eslint,

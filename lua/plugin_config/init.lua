@@ -13,3 +13,5 @@ require("/plugin_config/nvim-ts-rainbow")
 -- require("/plugin_config/llama")
 -- require("/plugin_config/refactoring")
 -- require("/plugin_config/buffer_manager")
+-- replaces the entire UI.
+require("/plugin_config/noice")
