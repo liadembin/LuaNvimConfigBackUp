@@ -1,7 +1,5 @@
-import requests
-
-
 import numpy as np
+import requests
 
 
 class Human:
@@ -14,4 +12,5 @@ class Human:
 
 p = Human("asd")
 print(p.Speak())
-requests.get("https://google.com/").text
+requests.get("https://google.com/")
+a = {}

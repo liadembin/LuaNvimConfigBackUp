@@ -21,20 +21,20 @@ require('nvim-treesitter.configs').setup {
       enable = true,
       set_jumps = true, -- whether to set jumps in the goto_next_start = {
       goto_next_start = {
-        [']f'] = '@function.outer',
-        [']]'] = '@class.outer',
+        ['gf'] = '@function.outer',
+        ['oc'] = '@class.outer',
       },
       goto_next_end = {
-        [']u'] = '@function.outer',
-        [']['] = '@class.outer',
+        ['ef'] = '@function.outer',
+        ['ec'] = '@class.outer',
       },
       goto_previous_start = {
-        ['[f'] = '@function.outer',
-        ['[c'] = '@class.outer',
+        ['sf'] = '@function.outer',
+        ['sc'] = '@class.outer',
       },
       goto_previous_end = {
-        ['[u'] = '@function.outer',
-        ['[]'] = '@class.outer',
+        ['pu'] = '@function.outer',
+        ['pc'] = '@class.outer',
       },
     },
     swap = {
@@ -69,4 +69,5 @@ require('nvim-treesitter.configs').setup {
     }
   },
 }
+
 -- Diagnostic keymas

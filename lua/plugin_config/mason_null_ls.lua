@@ -1,1 +1,1 @@
-require("mason-null-ls").setup();
+--[[ require("mason-null-ls").setup(); ]]

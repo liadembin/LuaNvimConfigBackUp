@@ -21,35 +21,30 @@ require('lazy').setup({
   -- { 'codota/tabnine-nvim',     build = "pwsh.exe -file .\\dl_binaries.ps1" },
   -- Git related plugins
   'tpope/vim-fugitive',
-  -- 'weilbith/nvim-code-action-menu',
-  -- lazy.nvim
-  {
-    "folke/noice.nvim",
-    event = "VeryLazy",
-    opts = {
-      -- add any options here
-    },
-    dependencies = {
-      -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
-      "MunifTanjim/nui.nvim",
-      -- OPTIONAL:
-      --   `nvim-notify` is only needed, if you want to use the notification view.
-      --   If not available, we use `mini` as the fallback
-      "rcarriga/nvim-notify",
-    }
-  },
-  "themaxmarchuk/tailwindcss-colors.nvim",
+  { "themaxmarchuk/tailwindcss-colors.nvim", priority = 5 },
   'tpope/vim-rhubarb',
   { 'onsails/lspkind.nvim' },
   --{ 'akinsho/toggleterm.nvim', version = "*",                              config = true },
-  'ThePrimeagen/vim-be-good',
-  'wintermute-cell/gitignore.nvim',
-  "williamboman/mason-lspconfig.nvim", -- or
+  { 'ThePrimeagen/vim-be-good',              priority = -1 },
+  { 'wintermute-cell/gitignore.nvim',        priority = 10, config = function() require("/plugin_config/gitignore") end },
+  { "williamboman/mason-lspconfig.nvim" }, -- or
   -- { 'akinsho/toggleterm.nvim', version = "*", opts = { --[[ things you want to change go here]] } },
   -- Detect tabstop and shiftwidth automatically
-
+  {
+    'goolord/alpha-nvim',
+    config = function()
+      require 'alpha'.setup(require 'alpha.themes.dashboard'.config)
+    end
+  },
   'tpope/vim-sleuth',
-  { "nvim-tree/nvim-tree.lua", lazy = false, dependencies = { "nvim-tree/nvim-web-devicons", } },
+  {
+    "nvim-tree/nvim-tree.lua",
+    lazy = false,
+    dependencies = { "nvim-tree/nvim-web-devicons", },
+    config = function()
+      require("/plugin_config/nvim_tree")
+    end
+  },
   -- NOTE: This is where your plugins related to LSP can be installed.
   --  The configuration is done below. Search for lspconfig to find it below.
   {
@@ -62,7 +57,7 @@ require('lazy').setup({
 
       -- Useful status updates for LSP
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim' } --[[ ,       opts = { tag = "legacy", branch = "legacy" }, branch = "legacy", tag = "legacy" } ]],
+      { 'j-hui/fidget.nvim' },
       -- Additional lua configuration, makes nvim stuff amazing!
       --
       'folke/neodev.nvim',
@@ -87,7 +82,7 @@ require('lazy').setup({
   },
   "windwp/nvim-ts-autotag",
   -- Useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim',  opts = {} },
+  { 'folke/which-key.nvim',  opts = {}, lazy = false },
   {
     -- Adds git releated signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
@@ -107,7 +102,12 @@ require('lazy').setup({
       end,
     },
   },
-  'norcalli/nvim-colorizer.lua',
+  {
+    'norcalli/nvim-colorizer.lua',
+    config = function()
+      require("/plugin_config/colorizer")
+    end
+  },
   --[[ { "ellisonleao/gruvbox.nvim",      priority = 1000 } ]] --
   { "EdenEast/nightfox.nvim" },
   {
@@ -116,7 +116,7 @@ require('lazy').setup({
     priority = 1000,
     opts = {
       style = "storm",
-      transparent = true,
+      --transparent = true,
       styles = {
         sidebars = "transparent",
         floats = "transparent",
@@ -152,10 +152,16 @@ require('lazy').setup({
   -- "gc" to comment visual regions/lines
   'Mofiqul/dracula.nvim',
   { "navarasu/onedark.nvim" },
-  { 'numToStr/Comment.nvim',         opts = {} },
-
-  -- Fuzzy Finder (files, lsp, etc)
-  { 'nvim-telescope/telescope.nvim', branch = '0.1.x', dependencies = { 'nvim-lua/plenary.nvim' } },
+  -- "gc" to comment visual regions/lines
+  { 'numToStr/Comment.nvim', opts = {} },
+  {
+    'nvim-telescope/telescope.nvim',
+    branch = '0.1.x',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    config = function()
+      require("/plugin_config/telescope")
+    end
+  },
 
   -- Fuzzy Finder Algorithm which requires local dependencies to be built.
   -- Only load if `make` is available. Make sure you have the system
@@ -164,13 +170,13 @@ require('lazy').setup({
     'nvim-telescope/telescope-fzf-native.nvim',
     -- NOTE: If you are having trouble with this installation,
     --       refer to the README for telescope-fzf-native for more instructions.
-    uild =
+    build =
     'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build',
     cond = function()
       return vim.fn.executable 'make' == 1
     end,
   },
-  'jose-elias-alvarez/null-ls.nvim',
+  { 'nvimtools/none-ls.nvim', config = function() require("/plugin_config/none_ls") end },
   {
     -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
@@ -179,68 +185,25 @@ require('lazy').setup({
       "nvim-treesitter/nvim-treesitter-context",
     },
     build = ':TSUpdate',
-  },
-  {
-    "jay-babu/mason-null-ls.nvim",
-    event = { "BufReadPre", "BufNewFile" },
-    dependencies = {
-      "williamboman/mason.nvim",
-      "jose-elias-alvarez/null-ls.nvim",
-    },
     config = function()
-      require("plugin_config.null_ls") -- require your null-ls config here (example below)
-    end,
+      require("/plugin_config/tree_sitter")
+    end
   },
-  -- 'averms/black-nvim',
-  -- "theprimeagen/refactoring.nvim",
+
   {
     'ThePrimeagen/harpoon',
-    dependencies = { 'nvim-lua/plenary.nvim' }
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    config = function()
+      require("/plugin_config/harpoon")
+    end
   },
-  -- {
-  --   'j-morano/buffer_manager.nvim',
-  --   dependencies = { 'nvim-lua/plenary.nvim' }
-  -- },
-
-  -- amongst your other plugins
-  -- { 'akinsho/toggleterm.nvim', version = "*", config = true },
-  -- or
-  -- {
-  --   'romgrk/barbar.nvim',
-  --   dependencies = {
-  --     'lewis6991/gitsigns.nvim',     -- OPTIONAL: for git status
-  --     'nvim-tree/nvim-web-devicons', -- OPTIONAL: for file icons
-  --   },
-  --   init = function() vim.g.barbar_auto_setup = false end,
-  --   opts = {
-  --     -- lazy.nvim will automatically call setup for you. put your options here, anything missing will use the default:
-  --     -- animation = true,
-  --     -- insert_at_start = true,
-  --     -- …etc.
-  --   },
-  --   version = '^1.0.0'
-  -- },
-
-  -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
-  --       These are some example plugins that I've included in the kickstart repository.
-  --       Uncomment any of the lines below to enable them.
   require 'kickstart.plugins.autoformat',
-  require 'kickstart.plugins.debug',
-  "mbbill/undotree",
-  "itmecho/neoterm.nvim",
-  -- NOTE: The import below automatically adds your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
-  --    You can use this folder to prevent any conflicts with this init.lua if you're interested in keeping
-  --    up-to-date with whatever is in the kickstart repo.
-  --
-  --    For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
-  "tpope/vim-dadbod",
-  "kristijanhusak/vim-dadbod-ui",
-  "kristijanhusak/vim-dadbod-completion",
-  -- {
-  --   'huggingface/llm.nvim',
-  --   opts = {
-  --     -- cf Setup
-  --   }
-  -- },
+  -- require 'kickstart.plugins.debug',
+  { "mbbill/undotree",        config = function() require("/plugin_config/undo_tree") end },
+
+  --{ "tpope/vim-dadbod",                     lazy = true },
+  --{ "kristijanhusak/vim-dadbod-ui",         lazy = true },
+  --{ "kristijanhusak/vim-dadbod-completion", lazy = true },
+
   { import = 'custom.plugins' },
 }, {})

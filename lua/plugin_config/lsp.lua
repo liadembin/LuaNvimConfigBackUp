@@ -93,7 +93,7 @@ local lsp_config = require("lspconfig")
 -- local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
 -- local mason_lspconfig = require 'mason-lspconfig'
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
+local capabilities = require("cmp_nvim_lsp").default_capabilities() -- vim.lsp.protocol.make_client_capabilities()
 local get_servers = require('mason-lspconfig').get_installed_servers
 for _, server_name in ipairs(get_servers()) do
   lsp_config[server_name].setup({
@@ -104,58 +104,8 @@ end
 
 
 
-require('lspkind').init({
-  -- DEPRECATED (use mode instead): enables text annotations
-  --
-  -- default: true
-  -- with_text = true,
-
-  -- defines how annotations are shown
-  -- default: symbol
-  -- options: 'text', 'text_symbol', 'symbol_text', 'symbol'
-  mode = 'text_symbol',
-  -- default symbol map
-  -- can be either 'default' (requires nerd-fonts font) or
-  -- 'codicons' for codicon preset (requires vscode-codicons font)
-  --
-  -- default: 'default'
-  preset = 'codicons',
-
-  -- override preset symbols
-  --
-  -- default: {}
-  symbol_map = {
-    Text = "󰉿 text",
-    Method = "󰆧 method",
-    Function = "󰊕 function",
-    Constructor = " contructor",
-    Field = "󰜢 field",
-    Variable = "󰀫 variable",
-    Class = "󰠱 class",
-    Interface = "  interface",
-    Module = "  module",
-    Property = "󰜢  Property",
-    Unit = "󰑭  Unit",
-    Value = "󰎠  Value",
-    Enum = "  Enum",
-    Keyword = "󰌋  Keyword",
-    Snippet = "  Snippet",
-    Color = "󰏘  Color",
-    File = "󰈙  File",
-    Reference = "󰈇  Reference",
-    Folder = "󰉋  Folder",
-    EnumMember = " EnumMember",
-    Constant = "󰏿  Constant",
-    Struct = "󰙅  Struct",
-    Event = " Event",
-    Operator = "󰆕  Operator",
-    TypeParameter = "Type Paramater",
-  },
-})
-
-
-vim.keymap.set('n', 'pd', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
-vim.keymap.set('n', 'nd', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
+vim.keymap.set('n', 'ep', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
+vim.keymap.set('n', 'en', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
 -- but im Lazy and dont know enought nvim yet

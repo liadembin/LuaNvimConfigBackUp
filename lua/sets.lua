@@ -29,7 +29,7 @@ vim.opt.signcolumn = "yes"
 
 vim.opt.isfname:append("@-@")
 
-vim.opt.updatetime = 50
+vim.opt.updatetime = 150
 
 vim.opt.colorcolumn = "80"
 
@@ -45,10 +45,8 @@ vim.o.mouse = 'a'
 vim.o.clipboard = 'unnamedplus'
 vim.opt.swapfile = false
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
-
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
-
 vim.keymap.set("n", "J", "mzJ`z")
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
@@ -92,10 +90,19 @@ vim.o.termguicolors = true
 -- See `:help vim.keymap.set()`
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 vim.keymap.set('n', '<leader>pf', function() vim.lsp.buf.format() end, { desc = "[P]rettify [F]ile" })
+vim.api.nvim_set_keymap('n', '<leader>of', ':!start "" %<CR><CR>',
+  { noremap = true, silent = true, desc = "Open file with associated program" })
+
+-- Reveal current directory in file explorer
+vim.api.nvim_set_keymap('n', '<leader>ox', ':!start explorer.exe .<CR><CR>',
+  { noremap = true, silent = true, desc = "Open file explorer in current dirr" })
+
+-- Open cmd in current directory
+vim.api.nvim_set_keymap('n', '<leader>oc', ':!start cmd /K cd %:p:h<CR><CR>',
+  { noremap = true, silent = true, desc = "Open Cmd in this dir" })
 -- Remap for dealing with word wrap
 --vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 --vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
-vim.keymap.set('n', '<C-/>', 'gc')
 --Folding Using Tree Sitter - https://www.jmaguire.tech/posts/treesitter_folding/
 vim.opt.foldenable = false
 vim.opt.foldmethod = "syntax"

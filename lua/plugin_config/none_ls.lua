@@ -4,20 +4,22 @@ null_ls.setup({
   sources = {
     null_ls.builtins.formatting.clang_format,
     null_ls.builtins.formatting.eslint,
+    null_ls.builtins.completion.spell,
     -- null_ls.builtins.formatting.lua_format,
     null_ls.builtins.formatting.autopep8,
     null_ls.builtins.formatting.prettier,
-    null_ls.builtins.code_actions.eslint,
+    null_ls.builtins.code_actions.eslint_d,
+    -- null_ls.builtins.code_actions.eslint,
     null_ls.builtins.diagnostics.clang_check,
+    null_ls.builtins.formatting.isort,
     -- null_ls.builtins.diagnostics.ruff,
     null_ls.builtins.formatting.csharpier,
     null_ls.builtins.formatting.prismaFmt,
-    null_ls.builtins.code_actions.refactoring,
+    -- null_ls.builtins.code_actions.refactoring,
     null_ls.builtins.diagnostics.sqlfluff.with({
       extra_args = { "--dialect", "mysql" }, -- change to your dialect
     }),
     null_ls.builtins.code_actions.cspell,
-    null_ls.builtins.code_actions.eslint_d,
 
     null_ls.builtins.code_actions.gomodifytags,
     null_ls.builtins.code_actions.impl
