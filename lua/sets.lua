@@ -59,14 +59,7 @@ vim.o.breakindent = true
 -- Save undo history
 vim.o.undofile = true
 vim.o.background = "dark"
-vim.cmd [[colorscheme nightfox]]
 
--- vim.cmd [[highlight Normal ctermbg=none]]
--- vim.cmd [[highlight NonText ctermbg=none]]
--- vim.cmd [[highlight Normal guibg=none]]
--- vim.cmd [[highlight NonText guibg=none]]
--- vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
--- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
 -- Case insensitive searching UNLESS /C or capital in search
 vim.o.ignorecase = true
 vim.o.smartcase = true
@@ -114,3 +107,9 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   group = highlight_group,
   pattern = '*',
 })
+vim.keymap.set('n', '<leader>to', function()
+  vim.cmd [[highlight Normal ctermbg=none]]
+  vim.cmd [[highlight NonText ctermbg=none]]
+  vim.cmd [[highlight Normal guibg=none]]
+  vim.cmd [[highlight NonText guibg=none]]
+end, { desc = "[T]oggle  [O]pacity" })

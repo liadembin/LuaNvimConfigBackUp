@@ -11,32 +11,23 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- NOTE: Here is where you install your plugins.
---  You can configure plugins using the `config` key.
---
---  You can also configure plugins after the setup call,
---    as they will be available in your neovim runtime.
 require('lazy').setup({
-  -- NOTE: First, some plugins that don't require any configuration
-  -- { 'codota/tabnine-nvim',     build = "pwsh.exe -file .\\dl_binaries.ps1" },
   -- Git related plugins
   'tpope/vim-fugitive',
   { "themaxmarchuk/tailwindcss-colors.nvim", priority = 5 },
   'tpope/vim-rhubarb',
   { 'onsails/lspkind.nvim' },
-  --{ 'akinsho/toggleterm.nvim', version = "*",                              config = true },
   { 'ThePrimeagen/vim-be-good',              priority = -1 },
   { 'wintermute-cell/gitignore.nvim',        priority = 10, config = function() require("/plugin_config/gitignore") end },
   { "williamboman/mason-lspconfig.nvim" }, -- or
-  -- { 'akinsho/toggleterm.nvim', version = "*", opts = { --[[ things you want to change go here]] } },
-  -- Detect tabstop and shiftwidth automatically
   {
     'goolord/alpha-nvim',
     config = function()
       require 'alpha'.setup(require 'alpha.themes.dashboard'.config)
     end
   },
-  'tpope/vim-sleuth',
+  -- Detect tabstop and shiftwidth automatically
+  { 'tpope/vim-sleuth' },
   {
     "nvim-tree/nvim-tree.lua",
     lazy = false,
@@ -56,11 +47,9 @@ require('lazy').setup({
       'williamboman/mason-lspconfig.nvim',
 
       -- Useful status updates for LSP
-      -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
       { 'j-hui/fidget.nvim' },
-      -- Additional lua configuration, makes nvim stuff amazing!
-      --
-      'folke/neodev.nvim',
+
+      -- 'folke/neodev.nvim',
     },
   },
 
@@ -80,9 +69,27 @@ require('lazy').setup({
       'rafamadriz/friendly-snippets',
     },
   },
-  "windwp/nvim-ts-autotag",
+  { "windwp/nvim-ts-autotag", priority = 5 },
+  {
+    "folke/trouble.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    opts = {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+    },
+    priority = 5,
+    config = function()
+      vim.keymap.set("n", "<leader>et", function() require("trouble").toggle() end, { desc = "Toggle Diagnostics" })
+      vim.keymap.set('n', '<leader>en', function() require("trouble").next({ skip_groups = true, jump = true }) end,
+        { desc = "Diagnostcs Next" })
+      -- jump to the previous item, skipping the groups
+      vim.keymap.set('n', '<leader>eb', function() require("trouble").previous({ skip_groups = true, jump = true }) end,
+        { desc = " Diagnostics Back" })
+    end
+  },
   -- Useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim',  opts = {}, lazy = false },
+  { 'folke/which-key.nvim',     opts = {},                                                         lazy = false },
   {
     -- Adds git releated signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
@@ -109,25 +116,21 @@ require('lazy').setup({
     end
   },
   --[[ { "ellisonleao/gruvbox.nvim",      priority = 1000 } ]] --
-  { "EdenEast/nightfox.nvim" },
   {
-    "folke/tokyonight.nvim",
+    "EdenEast/nightfox.nvim",
     lazy = false,
-    priority = 1000,
-    opts = {
-      style = "storm",
-      --transparent = true,
-      styles = {
-        sidebars = "transparent",
-        floats = "transparent",
-      },
-    },
-    config = function(_, opts)
-      local tokyonight = require "tokyonight"
-      tokyonight.setup(opts)
-      tokyonight.load()
+    config = function()
+      vim.cmd [[colorscheme nightfox]]
+      vim.cmd [[highlight Normal ctermbg=none]]
+      vim.cmd [[highlight NonText ctermbg=none]]
+      vim.cmd [[highlight Normal guibg=none]]
+      vim.cmd [[highlight NonText guibg=none]]
+      -- vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+      -- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
     end,
+    priority = 10000
   },
+
   {
     -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
@@ -142,18 +145,14 @@ require('lazy').setup({
     },
   },
 
-  -- {
-  --   -- Add indentation guides even on blank lines
-  --   'lukas-reineke/indent-blankline.nvim',
-  --   -- Enable `lukas-reineke/indent-blankline.nvim`
-  --   -- See `:help indent_blankline.txt`
-  -- },
-  "HiPhish/nvim-ts-rainbow2",
-  -- "gc" to comment visual regions/lines
-  'Mofiqul/dracula.nvim',
-  { "navarasu/onedark.nvim" },
-  -- "gc" to comment visual regions/lines
-  { 'numToStr/Comment.nvim', opts = {} },
+  {
+    -- Add indentation guides even on blank lines
+    'lukas-reineke/indent-blankline.nvim',
+    -- Enable `lukas-reineke/indent-blankline.nvim`
+    -- See `:help indent_blankline.txt`
+  },
+  { "HiPhish/nvim-ts-rainbow2", config = function() require("/plugin_config/nvim-ts-rainbow") end, priority = 1 },
+  { 'numToStr/Comment.nvim',    opts = {} },
   {
     'nvim-telescope/telescope.nvim',
     branch = '0.1.x',
@@ -176,7 +175,7 @@ require('lazy').setup({
       return vim.fn.executable 'make' == 1
     end,
   },
-  { 'nvimtools/none-ls.nvim', config = function() require("/plugin_config/none_ls") end },
+  { 'nvimtools/none-ls.nvim' }, --config = --[[ function() require("/plugin_config/none_ls") end ]] },
   {
     -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
@@ -199,11 +198,13 @@ require('lazy').setup({
   },
   require 'kickstart.plugins.autoformat',
   -- require 'kickstart.plugins.debug',
-  { "mbbill/undotree",        config = function() require("/plugin_config/undo_tree") end },
-
-  --{ "tpope/vim-dadbod",                     lazy = true },
-  --{ "kristijanhusak/vim-dadbod-ui",         lazy = true },
-  --{ "kristijanhusak/vim-dadbod-completion", lazy = true },
-
-  { import = 'custom.plugins' },
+  { "mbbill/undotree",       config = function() require("/plugin_config/undo_tree") end },
+  {
+    "aznhe21/actions-preview.nvim",
+    config = function()
+      vim.keymap.set("n", "ct", require("actions-preview").code_actions, { desc = "Code Telescope" })
+    end,
+    priority = 0
+  }
+  -- { import = 'custom.plugins' },
 }, {})

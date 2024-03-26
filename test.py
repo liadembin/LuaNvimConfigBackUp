@@ -14,3 +14,4 @@ p = Human("asd")
 print(p.Speak())
 requests.get("https://google.com/")
 a = {}
+a.get("asd")

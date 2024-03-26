@@ -1,4 +1,4 @@
-require("/plugin_config/gitignore")
+--[[ require("/plugin_config/gitignore")
 require("/plugin_config/harpoon")
 require("/plugin_config/undo_tree")
 require("/plugin_config/colorizer")
@@ -15,4 +15,5 @@ require("/plugin_config/none_ls")
 -- require("/plugin_config/refactoring")
 -- require("/plugin_config/buffer_manager")
 -- replaces the entire UI.
+- ]]
 -- require("/plugin_config/noice")

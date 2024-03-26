@@ -10,4 +10,3 @@ vim.keymap.set("n", "g4", function() require("harpoon.ui").nav_file(4) end, { de
 vim.keymap.set("n", "g5", function() require("harpoon.ui").nav_file(5) end, { desc = "[G]oto [5]" })
 --buffer_manager
 --Error detected while processing C:\Users\liad8\AppData\Local\nvim\init.lua:
-
