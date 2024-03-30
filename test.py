@@ -1,3 +1,5 @@
+from typing import Dict
+
 import numpy as np
 import requests
 
@@ -11,7 +13,11 @@ class Human:
 
 
 p = Human("asd")
+
 print(p.Speak())
+
 requests.get("https://google.com/")
-a = {}
-a.get("asd")
+
+a: Dict[str, Human] = {}
+
+a.get("asd").Speak()

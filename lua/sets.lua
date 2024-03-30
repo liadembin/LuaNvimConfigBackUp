@@ -12,7 +12,7 @@ vim.opt.expandtab = true
 vim.opt.smartindent = true
 
 vim.opt.wrap = false
-
+vim.opt.showmode = false
 vim.opt.scrolloff = 8
 vim.opt.swapfile = false
 vim.opt.backup = false
@@ -21,7 +21,11 @@ vim.opt.undofile = true
 
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
+vim.opt.inccommand = 'split'
 
+-- Show which line your cursor is on
+vim.opt.cursorline = false
+-- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.termguicolors = true
 
 vim.opt.scrolloff = 8
@@ -29,7 +33,7 @@ vim.opt.signcolumn = "yes"
 
 vim.opt.isfname:append("@-@")
 
-vim.opt.updatetime = 150
+vim.opt.updatetime = 250
 
 vim.opt.colorcolumn = "80"
 
@@ -71,9 +75,12 @@ vim.wo.signcolumn = 'yes'
 vim.o.updatetime = 250
 vim.o.timeout = true
 vim.o.timeoutlen = 300
-
+vim.opt.splitright = true
+vim.opt.splitbelow = true
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
+vim.opt.list = true
+vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
@@ -107,9 +114,15 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   group = highlight_group,
   pattern = '*',
 })
-vim.keymap.set('n', '<leader>to', function()
-  vim.cmd [[highlight Normal ctermbg=none]]
-  vim.cmd [[highlight NonText ctermbg=none]]
-  vim.cmd [[highlight Normal guibg=none]]
-  vim.cmd [[highlight NonText guibg=none]]
-end, { desc = "[T]oggle  [O]pacity" })
+-- vim.keymap.set('n', '<leader>to', function()
+--   vim.cmd [[highlight Normal ctermbg=none]]
+--   vim.cmd [[highlight NonText ctermbg=none]]
+--   vim.cmd [[highlight Normal guibg=none]]
+--   vim.cmd [[highlight NonText guibg=none]]
+-- end, { desc = "[T]oggle  [O]pacity" })
+vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
+vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
+vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
+vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+-- Set the g:python3_host_prog variable to specify the Python 3 host program
+vim.g.python3_host_prog = 'C:\\Program Files\\Python311\\python.exe'
