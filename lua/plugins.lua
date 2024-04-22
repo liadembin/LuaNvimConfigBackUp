@@ -13,20 +13,21 @@ vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
     -- Git related plugins
-    {
-        'EdenEast/nightfox.nvim',
-        lazy = false,
-        config = function()
-            vim.cmd([[colorscheme nightfox]])
-            -- vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-            -- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
-        end,
-        priority = 10000,
-    },
+    -- {
+    --     'EdenEast/nightfox.nvim',
+    --     lazy = false,
+    --     config = function()
+    --         vim.cmd([[colorscheme nightfox]])
+    --         -- vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+    --         -- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+    --     end,
+    --     priority = 10000,
+    -- },
     'tpope/vim-fugitive',
-    { 'themaxmarchuk/tailwindcss-colors.nvim', priority = 5 },
+    -- Detect tabstop and shiftwidth automatically
+    { 'tpope/vim-sleuth' },
     'tpope/vim-rhubarb',
-    { 'onsails/lspkind.nvim' },
+    { 'themaxmarchuk/tailwindcss-colors.nvim', priority = 5 },
     { 'ThePrimeagen/vim-be-good', priority = -1 },
     {
         'wintermute-cell/gitignore.nvim',
@@ -36,14 +37,6 @@ require('lazy').setup({
         end,
     },
     { 'williamboman/mason-lspconfig.nvim' }, -- or
-    {
-        'goolord/alpha-nvim',
-        config = function()
-            require('alpha').setup(require('alpha.themes.dashboard').config)
-        end,
-    },
-    -- Detect tabstop and shiftwidth automatically
-    { 'tpope/vim-sleuth' },
     {
         'nvim-tree/nvim-tree.lua',
         lazy = false,
@@ -62,17 +55,18 @@ require('lazy').setup({
             { 'williamboman/mason.nvim', config = true },
             'williamboman/mason-lspconfig.nvim',
             'WhoIsSethDaniel/mason-tool-installer.nvim',
-
+            { 'onsails/lspkind.nvim' },
             -- Useful status updates for LSP
             { 'j-hui/fidget.nvim' },
 
             -- 'folke/neodev.nvim',
         },
     },
+    { 'onsails/lspkind.nvim' },
     { -- Autoformat
         'stevearc/conform.nvim',
         opts = {
-            notify_on_error = false,
+            notify_on_error = true,
             format_on_save = function(bufnr)
                 -- Disable "format_on_save lsp_fallback" for languages that don't
                 -- have a well standardized coding style. You can add additional
@@ -86,7 +80,7 @@ require('lazy').setup({
             formatters_by_ft = {
                 lua = { 'stylua' },
                 -- Conform can also run multiple formatters sequentially
-                python = { 'isort', 'black' },
+                python = { 'black', 'isort' },
                 --
                 -- You can use a sub-list to tell conform to run *until* a formatter
                 -- is found.
@@ -104,37 +98,28 @@ require('lazy').setup({
         'echasnovski/mini.nvim',
         config = function()
             -- Better Around/Inside textobjects
-            --
-            -- Examples:
-            --  - va)  - [V]isually select [A]round [)]paren
-            --  - yinq - [Y]ank [I]nside [N]ext [']quote
-            --  - ci'  - [C]hange [I]nside [']quote
             require('mini.ai').setup({ n_lines = 500 })
 
-            -- Add/delete/replace surroundings (brackets, quotes, etc.)
-            --
-            -- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
-            -- - sd'   - [S]urround [D]elete [']quotes
-            -- - sr)'  - [S]urround [R]eplace [)] [']
             require('mini.surround').setup()
 
-            -- Simple and easy statusline.
-            --  You could remove this setup call if you don't like it,
-            --  and try some other statusline plugin
-            local statusline = require('mini.statusline')
-            -- set use_icons to true if you have a Nerd Font
-            statusline.setup({ use_icons = vim.g.have_nerd_font })
-
-            -- You can configure sections in the statusline by overriding their
-            -- default behavior. For example, here we set the section for
-            -- cursor location to LINE:COLUMN
-            ---@diagnostic disable-next-line: duplicate-set-field
-            statusline.section_location = function()
-                return '%2l:%-2v'
-            end
-
-            -- ... and there is more!
-            --  Check out: https://github.com/echasnovski/mini.nvim
+            --     -- Simple and easy statusline.
+            --     --  You could remove this setup call if you don't like it,
+            --     --  and try some other statusline plugin
+            --     local statusline = require('mini.statusline')
+            --     -- set use_icons to true if you have a Nerd Font
+            --     statusline.setup({ use_icons = vim.g.have_nerd_font })
+            --
+            --     -- You can configure sections in the statusline by overriding their
+            --     -- default behavior. For example, here we set the section for
+            --     -- cursor location to LINE:COLUMN
+            --     ---@diagnostic disable-next-line: duplicate-set-field
+            --     statusline.section_location = function()
+            --         return '%2l:%-2v'
+            --     end
+            --
+            --     -- ... and there is more!
+            --     --  Check out: https://github.com/echasnovski/mini.nvim
+            -- end,
         end,
     },
     { -- Highlight, edit, and navigate code
@@ -182,17 +167,18 @@ require('lazy').setup({
                         return
                     end
                     return 'make install_jsregexp'
+
                 end)(),
                 dependencies = {
                     -- `friendly-snippets` contains a variety of premade snippets.
                     --    See the README about individual language/framework/plugin snippets:
                     --    https://github.com/rafamadriz/friendly-snippets
-                    -- {
-                    --   'rafamadriz/friendly-snippets',
-                    --   config = function()
-                    --     require('luasnip.loaders.from_vscode').lazy_load()
-                    --   end,
-                    -- },
+                    {
+                        'rafamadriz/friendly-snippets',
+                        config = function()
+                            require('luasnip.loaders.from_vscode').lazy_load()
+                        end,
+                    },
                 },
             },
             'saadparwaiz1/cmp_luasnip',
@@ -336,9 +322,19 @@ require('lazy').setup({
             require('/plugin_config/colorizer')
         end,
     },
-    --[[ { "ellisonleao/gruvbox.nvim",      priority = 1000 } ]]
+     { "ellisonleao/gruvbox.nvim",      
+        priority = 1000 ,   
+        lazy = false,
+        config = function()
+            vim.o.background = "dark" -- or "light" for light mode
+            vim.cmd([[colorscheme gruvbox]]) 
+            --  vim.cmd([[colorscheme gruvbox]])
+             -- vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+             -- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+         end,
+         priority = 10000,
+ },
     --
-
     {
         -- Set lualine as statusline
         'nvim-lualine/lualine.nvim',
@@ -346,7 +342,7 @@ require('lazy').setup({
         opts = {
             options = {
                 icons_enabled = true,
-                theme = 'nightfox',
+                theme = 'gruvbox_dark',
                 component_separators = '|',
                 section_separators = '',
             },
@@ -354,15 +350,12 @@ require('lazy').setup({
     },
 
     {
-        -- Add indentation guides even on blank lines
         'lukas-reineke/indent-blankline.nvim',
-        -- Enable `lukas-reineke/indent-blankline.nvim`
-        -- See `:help indent_blankline.txt`
     },
     {
-        'HiPhish/nvim-ts-rainbow2',
+        'HiPhish/rainbow-delimiters.nvim',
         config = function()
-            require('/plugin_config/nvim-ts-rainbow')
+            require('/plugin_config/rainbow_delimiters')
         end,
         priority = 1,
     },
@@ -392,7 +385,7 @@ require('lazy').setup({
             { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
         },
     },
-    { 'nvimtools/none-ls.nvim' }, --config = --[[ function() require("/plugin_config/none_ls") end ]] },
+    -- { 'nvimtools/none-ls.nvim' }, --config = --[[ function() require("/plugin_config/none_ls") end ]] },
     {
         -- Highlight, edit, and navigate code
         'nvim-treesitter/nvim-treesitter',
@@ -426,12 +419,10 @@ require('lazy').setup({
         config = function()
             vim.keymap.set(
                 'n',
-                'ct',
+                'cp',
                 require('actions-preview').code_actions,
                 { desc = 'Code Telescope' }
             )
         end,
-        -- priority = 0,
     },
-    -- { import = 'custom.plugins' },
 }, {})

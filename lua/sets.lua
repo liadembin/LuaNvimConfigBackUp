@@ -8,7 +8,6 @@ vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 
-
 vim.opt.smartindent = true
 
 vim.opt.wrap = false
@@ -16,7 +15,7 @@ vim.opt.showmode = false
 vim.opt.scrolloff = 8
 vim.opt.swapfile = false
 vim.opt.backup = false
-vim.opt.undodir = "/.vim/undodir"
+vim.opt.undodir = '/.vim/undodir'
 vim.opt.undofile = true
 
 vim.opt.hlsearch = true
@@ -29,13 +28,13 @@ vim.opt.cursorline = false
 vim.opt.termguicolors = true
 
 vim.opt.scrolloff = 8
-vim.opt.signcolumn = "yes"
+vim.opt.signcolumn = 'yes'
 
-vim.opt.isfname:append("@-@")
+vim.opt.isfname:append('@-@')
 
 vim.opt.updatetime = 250
 
-vim.opt.colorcolumn = "80"
+vim.opt.colorcolumn = '80'
 
 -- Set highlight on search
 --vim.keymap.set('n', '<leader>mt', ':Format')
@@ -48,21 +47,20 @@ vim.o.mouse = 'a'
 --  See `:help 'clipboard'`
 vim.o.clipboard = 'unnamedplus'
 vim.opt.swapfile = false
-vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
-vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
-vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
-vim.keymap.set("n", "J", "mzJ`z")
-vim.keymap.set("n", "<C-d>", "<C-d>zz")
-vim.keymap.set("n", "<C-u>", "<C-u>zz")
-vim.keymap.set("n", "n", "nzzzv")
-vim.keymap.set("n", "N", "Nzzzv")
-
+vim.keymap.set('n', '<leader>pv', vim.cmd.Ex)
+vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv")
+vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv")
+vim.keymap.set('n', 'J', 'mzJ`z')
+vim.keymap.set('n', '<C-d>', '<C-d>zz')
+vim.keymap.set('n', '<C-u>', '<C-u>zz')
+vim.keymap.set('n', 'n', 'nzzzv')
+vim.keymap.set('n', 'N', 'Nzzzv')
 
 -- Enable break indent
 vim.o.breakindent = true
 -- Save undo history
 vim.o.undofile = true
-vim.o.background = "dark"
+vim.o.background = 'dark'
 
 -- Case insensitive searching UNLESS /C or capital in search
 vim.o.ignorecase = true
@@ -89,37 +87,51 @@ vim.o.termguicolors = true
 -- Keymaps for better default experience
 -- See `:help vim.keymap.set()`
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
-vim.keymap.set('n', '<leader>pf', function() vim.lsp.buf.format() end, { desc = "[P]rettify [F]ile" })
-vim.api.nvim_set_keymap('n', '<leader>of', ':!start "" %<CR><CR>',
-  { noremap = true, silent = true, desc = "Open file with associated program" })
+vim.keymap.set('n', '<leader>pf', function()
+    vim.lsp.buf.format()
+end, { desc = '[P]rettify [F]ile' })
+vim.api.nvim_set_keymap(
+    'n',
+    '<leader>of',
+    ':!start "" %<CR><CR>',
+    { noremap = true, silent = true, desc = 'Open file with associated program' }
+)
 
 -- Reveal current directory in file explorer
-vim.api.nvim_set_keymap('n', '<leader>ox', ':!start explorer.exe .<CR><CR>',
-  { noremap = true, silent = true, desc = "Open file explorer in current dirr" })
+vim.api.nvim_set_keymap(
+    'n',
+    '<leader>ox',
+    ':!start explorer.exe .<CR><CR>',
+    { noremap = true, silent = true, desc = 'Open file explorer in current dirr' }
+)
 
 -- Open cmd in current directory
-vim.api.nvim_set_keymap('n', '<leader>oc', ':!start cmd /K cd %:p:h<CR><CR>',
-  { noremap = true, silent = true, desc = "Open Cmd in this dir" })
+vim.api.nvim_set_keymap(
+    'n',
+    '<leader>oc',
+    ':!start cmd /K cd %:p:h<CR><CR>',
+    { noremap = true, silent = true, desc = 'Open Cmd in this dir' }
+)
 -- Remap for dealing with word wrap
 --vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 --vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 --Folding Using Tree Sitter - https://www.jmaguire.tech/posts/treesitter_folding/
 vim.opt.foldenable = false
-vim.opt.foldmethod = "syntax"
+vim.opt.foldmethod = 'manual'
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
 vim.api.nvim_create_autocmd('TextYankPost', {
-  callback = function()
-    vim.highlight.on_yank()
-  end,
-  group = highlight_group,
-  pattern = '*',
+    callback = function()
+        vim.highlight.on_yank()
+    end,
+    group = highlight_group,
+    pattern = '*',
 })
 -- vim.keymap.set('n', '<leader>to', function()
---   vim.cmd [[highlight Normal ctermbg=none]]
---   vim.cmd [[highlight NonText ctermbg=none]]
---   vim.cmd [[highlight Normal guibg=none]]
---   vim.cmd [[highlight NonText guibg=none]]
--- end, { desc = "[T]oggle  [O]pacity" })
+--     vim.cmd([[highlight Normal ctermbg=none]])
+--     vim.cmd([[highlight NonText ctermbg=none]])
+--     vim.cmd([[highlight Normal guibg=none]])
+--     vim.cmd([[highlight NonText guibg=none]])
+-- end, { desc = '[T]oggle  [O]pacity' })
 vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })

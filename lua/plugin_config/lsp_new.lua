@@ -13,15 +13,17 @@ vim.api.nvim_create_autocmd('LspAttach', {
         -- Jump to the definition of the word under your cursor.
         --  This is where a variable was first declared, or where a function is defined, etc.
         --  To jump back, press <C-t>.
-        map('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
+        map('<leader>gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
 
         -- Find references for the word under your cursor.
-        map('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
+        map('<leader>gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
 
         -- Jump to the implementation of the word under your cursor.
         --  Useful when your language has ways of declaring types without an actual implementation.
         map('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
-
+        map('<leader>e', function()
+            vim.diagnostic.open_float({ scope = 'line' })
+        end, '[E]rror')
         -- Jump to the type of the word under your cursor.
         --  Useful when you're not sure what type a variable is and you want to see
         --  the definition of its *type*, not where it was *defined*.
@@ -102,8 +104,8 @@ local servers = {
     tailwindcss = {},
     --pylyzer = {},
     svelte = {},
-    prismals = {},
-    asm_lsp = {},
+    -- prismals = {},
+    -- asm_lsp = {},
     html = {},
     jsonls = {},
     omnisharp = {},
@@ -111,8 +113,8 @@ local servers = {
     emmet_ls = {},
     -- rome = {},
     biome = {},
-    pylsp = {},
-    jedi_language_server = {},
+    -- pylsp = {},
+    -- jedi_language_server = {},
     cmake = {},
     -- pylama = {},
     -- pydocstyle = {},
@@ -122,8 +124,9 @@ local servers = {
             telemetry = { enable = false },
         },
     },
-
-    --black = {}
+    black = {},
+    prettier = {},
+    prettierd = {},
 }
 
 -- Ensure the servers and tools above are installed
