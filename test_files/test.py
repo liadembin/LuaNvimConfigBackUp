@@ -13,11 +13,11 @@ class Human:
 
 
 p = Human("asd")
-
 print(p.Speak())
-
 requests.get("https://google.com/")
-
 a: Dict[str, Human] = {}
-
 a.get("asd").Speak()
+p.Speak()
+
+if a:
+    print("123")
