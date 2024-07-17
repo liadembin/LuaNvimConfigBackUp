@@ -1,0 +1,56 @@
+return {}
+-- return {
+-- 	"stevearc/aerial.nvim",
+-- 	dependencies = {
+-- 		"nvim-treesitter/nvim-treesitter",
+-- 		"nvim-tree/nvim-web-devicons",
+-- 	},
+-- 	opts = {
+-- 		layout = {
+-- 			default_direction = "right",
+-- 			width = 60,
+-- 		},
+-- 		keymaps = {
+-- 			["[{"] = "prev",
+-- 			["]}"] = "next",
+-- 		},
+-- 		open_automatic = true,
+-- 		close_automatic_events = {
+-- 			"unfocus",
+-- 			-- "switch_buffer",
+-- 			"unsupported",
+-- 		},
+-- 	},
+-- 	config = function(_, opts)
+-- 		require("aerial").setup(opts)
+-- 		vim.keymap.set("n", "<leader>at", "<cmd>AerialToggle!<CR>", { desc = "Toggle Aerial" })
+--
+-- 		-- Function to toggle Aerial position
+-- 		local function toggle_aerial_position()
+-- 			local aerial = require("aerial")
+-- 			local current_direction = aerial.get_direction()
+-- 			local new_direction = current_direction == "left" and "right" or "left"
+-- 			aerial.close()
+-- 			aerial.setup({ layout = { default_direction = new_direction } })
+-- 			aerial.open()
+-- 		end
+-- 		vim.keymap.set("n", "<leader>ap", toggle_aerial_position, { desc = "Toggle Aerial Position" })
+-- 	end,
+-- } -- Open Aerial when a file is opened
+-- --		vim.api.nvim_create_autocmd("BufEnter", {
+-- --			callback = function()
+-- --				if vim.bo.buftype == "" then -- Only for normal buffers
+-- --					require("aerial").open()
+-- --				end
+-- --			end,
+-- --		})
+-- --
+-- --		-- Close Aerial when NvimTree is focused
+-- ---		vim.api.nvim_create_autocmd("BufEnter", {
+-- --			pattern = "NvimTree_*",
+-- --			callback = function()
+-- --				require("aerial").close()
+-- --			end,
+-- --		})
+-- --	end,
+-- --}
