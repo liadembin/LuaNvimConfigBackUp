@@ -129,3 +129,4 @@ vim.keymap.set("n", "<C-j>", "<C-w><C-j>", { desc = "Move focus to the lower win
 vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper window" })
 -- Set the g:python3_host_prog variable to specify the Python 3 host program
 vim.g.python3_host_prog = "C:\\Program Files\\Python311\\python.exe"
+vim.o.statuscolumn = ""

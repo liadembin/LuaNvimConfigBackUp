@@ -19,14 +19,14 @@ return { -- Autoformat
 			-- languages here or re-enable it for the disabled ones.
 			local disable_filetypes = { cpp = true }
 			return {
-				timeout_ms = 500,
+				timeout_ms = 3000,
 				lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
 			}
 		end,
 		formatters_by_ft = {
 			lua = { "stylua" },
 			-- Conform can also run multiple formatters sequentially
-			python = { "black", "isort" },
+			-- python = { "black", "isort" },
 			--
 			-- You can use a sub-list to tell conform to run *until* a formatter
 			-- is found.
