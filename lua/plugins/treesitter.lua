@@ -10,7 +10,7 @@ return {
 			"c",
 			"cpp",
 			"go",
-			"lua",
+			--"lua",
 			"python",
 			"rust",
 			"tsx",
@@ -87,4 +87,5 @@ return {
 		require("nvim-treesitter.install").prefer_git = true
 		require("nvim-treesitter.configs").setup(opts)
 	end,
+	lazy=1000
 }

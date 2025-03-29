@@ -1,3 +1,5 @@
+vim.g.python_host_skip_check = 1
+vim.g.python3_host_skip_check = 1
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 vim.g.colorcolumn = 90
@@ -46,6 +48,17 @@ vim.o.mouse = "a"
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
 vim.o.clipboard = "unnamedplus"
+vim.api.nvim_create_autocmd({ "FocusGained" }, {
+  pattern = { "*" },
+  command = [[call setreg("@", getreg("+"))]],
+})
+
+
+  -- sync with system clipboard on focus
+  vim.api.nvim_create_autocmd({ "FocusLost" }, {
+    pattern = { "*" },
+    command = [[call setreg("+", getreg("@"))]], 
+  })
 vim.opt.swapfile = false
 vim.keymap.set("n", "<leader>tt", ":NvimTreeToggle<CR>")
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
@@ -61,7 +74,10 @@ vim.o.breakindent = true
 -- Save undo history
 vim.o.undofile = true
 vim.o.background = "dark"
-
+vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
+vim.api.nvim_set_hl(0, "SignColumn", { bg = "none" })
 -- Case insensitive searching UNLESS /C or capital in search
 vim.o.ignorecase = true
 vim.o.smartcase = true
@@ -130,3 +146,7 @@ vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper win
 -- Set the g:python3_host_prog variable to specify the Python 3 host program
 vim.g.python3_host_prog = "C:\\Program Files\\Python311\\python.exe"
 vim.o.statuscolumn = ""
+vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
+vim.api.nvim_set_hl(0, "SignColumn", { bg = "none" })
