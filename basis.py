@@ -11,4 +11,4 @@ def tw_sum(arr, target) -> List[int]:
         if pair in has:
             return [has[pair], i]
         has[val] = i
-    return [-1, -1]
+    return [-1, -1] 

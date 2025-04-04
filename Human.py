@@ -20,3 +20,4 @@ class Person:
 if False or True:
     print(1)
 print(Person.mro())
+

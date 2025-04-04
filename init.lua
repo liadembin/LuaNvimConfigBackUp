@@ -13,7 +13,7 @@ vim.opt.rtp:prepend(lazypath)
 -- Example using a list of specs with the default options
 require("plugins/sets")
 require("lazy").setup({
-	--'dstein64/vim-startuptime',
+	'dstein64/vim-startuptime',
 	{
 		"EdenEast/nightfox.nvim",
 		config = function()
@@ -28,7 +28,7 @@ require("lazy").setup({
 	},
 	"tpope/vim-sleuth",
 	-- "tpope/vim-rhubarb",
-	{ 'github/copilot.vim',   priority = 1 },
+	{ 'github/copilot.vim',   priority = 1 ,event='InsertEnter' },
 	-- {
 	--   "zbirenbaum/copilot.lua",
 	--   event = "InsertEnter",
@@ -229,6 +229,7 @@ require("lazy").setup({
 	require("plugins/treesitter"),
 	require("plugins/telescope"),
 	require("plugins/luasnip"),
+	require("plugins/lsp"),
 	-- require("plugins/conform"),
 	-- require("plugins/spotify"),
 	require("plugins/aerial"),
@@ -275,4 +276,4 @@ require("lazy").setup({
 	-- },
 	{ "folke/which-key.nvim", opts = {},   priority = 1 },
 })
-require("plugins/lsp")
+-- require("plugins/lsp_new")
