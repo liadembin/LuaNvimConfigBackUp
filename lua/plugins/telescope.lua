@@ -58,12 +58,12 @@ return {
         end, { desc = '[/] Fuzzily find in current buffer' })
 
         -- Live grep in open files
-        vim.keymap.set('n', '<leader>f/', function()
+        vim.keymap.set('n', '<leader>fu', function()
             builtin.live_grep({
                 grep_open_files = true,
                 prompt_title = 'Live Grep in Open Files',
             })
-        end, { desc = '[F]ind [/] in Open Files' })
+        end, { desc = '[F]ind [U] in Open Files' })
 
         -- Find Neovim configuration files
         vim.keymap.set('n', '<leader>fn', function()

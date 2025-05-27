@@ -19,7 +19,15 @@ vim.opt.swapfile = false
 vim.opt.backup = false
 -- vim.opt.undodir = -"/.vim/undodir"
 vim.opt.undofile = true
-vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
+local uname = vim.loop.os_uname()
+
+_G.OS = uname.sysname
+_G.IS_WINDOWS = _G.OS:find('Windows') and true or false
+if _G.IS_WINDOWS then 
+    vim.opt.undodir = "C:\\Users\\liad8\\.vim"
+else 
+    vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
+end
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
 vim.opt.inccommand = "split"

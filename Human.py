@@ -20,4 +20,6 @@ class Person:
 if False or True:
     print(1)
 print(Person.mro())
-
+p = Person("Name")
+p.Idk().capitalize().isalnum()
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa =  123
