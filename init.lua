@@ -6,6 +6,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 		"--filter=blob:none",
 		"https://github.com/folke/lazy.nvim.git",
 		"--branch=stable", -- latest stable release
+
 		lazypath,
 	})
 end
@@ -14,10 +15,32 @@ vim.opt.rtp:prepend(lazypath)
 require("plugins/sets")
 require("lazy").setup({
 	"dstein64/vim-startuptime",
+	-- {
+	-- 	"EdenEast/nightfox.nvim",
+	-- 	config = function()
+	-- 		vim.cmd("colorscheme duskfox")
+	-- 	end,
+	-- },
+	-- {
+	-- 	"embark-theme/vim",
+	-- 	as = "embark",
+	-- 	config = function()
+	-- 		vim.g.embark_terminal_italics = 1
+	-- 		vim.cmd("colorscheme embark")
+	-- 	end,
+	-- },
+	-- {
+	-- 	"nvim-lualine/lualine.nvim",
+	-- 	config = function()
+	-- 		-- require("plugins/lualine")
+	-- 	end,
+	-- },
+	-- { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
 	{
-		"EdenEast/nightfox.nvim",
+		"Mofiqul/dracula.nvim",
+		priority = 1000,
 		config = function()
-			vim.cmd("colorscheme duskfox")
+			vim.cmd("colorscheme dracula")
 		end,
 	},
 
@@ -37,4 +60,5 @@ require("lazy").setup({
 	{ "echasnovski/mini.nvim", version = "*" },
 	{ "folke/which-key.nvim", opts = {}, priority = 1 },
 })
+require("plugins/spt")
 -- require("plugins/lsp_new")
